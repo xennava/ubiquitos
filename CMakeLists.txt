@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.20)
 project(TicTacToe C)
 
 set(CMAKE_BUILD_TYPE Debug)
@@ -27,4 +27,4 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
   add_link_options(-fsanitize=address)
 endif()
 
-add_executable(ttt ${SRCS})
+add_executable(ubiquitos ${SRCS})

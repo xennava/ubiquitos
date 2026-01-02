@@ -26,6 +26,6 @@ extern void *voidState;
 #define getLPctr (Pctr & 255)
 #define getHPctr ((Pctr >> 8) & 255)
 
-// static inline void *getPInternalSt() { return voidState; }
+inline void *getPInternalSt() { return voidState; }
 
 #endif // !UTILS_H

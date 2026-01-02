@@ -1,6 +1,7 @@
 #include "tictactoe.h"
 #include "trit.h"
 #include "utils.h"
+#include <stdint.h>
 #include <stdlib.h>
 
 void AIturn(U8 *curXO) {
@@ -15,15 +16,10 @@ void AIturn(U8 *curXO) {
       emptyIndex[count++] = i;
   }
 
-  // int rndInt = abs((rand() >> 27) - 7);
-  // while (getTrit16(rndInt) != 0) {
-  //   rndInt = abs((rand() >> 27) - 7);
-  // }
-
   if (count == 0)
     return;
-  U8 rndInt = emptyIndex[rand() % count];
-  setTrit16(rndInt, *curXO);
+  // index -> a random pick of available move
+  setTrit16(emptyIndex[(rand() >> 28) % count], *curXO);
   freeCtr++;
   *curXO = 1;
 }
