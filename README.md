@@ -3,11 +3,11 @@
 <!--toc:start-->
 
 - [Ubiquitos](#ubiquitos)
-  - [✨ Fitur Utama](#fitur-utama)
-  - [📂 Struktur Proyek](#📂-struktur-proyek)
+  - [Fitur Utama](#fitur-utama)
   - [Build & Run (Console)](#build-run-console)
   - [Tentang AI & Randomness](#tentang-ai-randomness)
   - [Tujuan Proyek](#tujuan-proyek)
+  - [Status](#status)
   <!--toc:end-->
 
 **Ubiquitos** adalah proyek pembelajaran dan eksperimen pemrograman berbasis C yang berfokus pada **desain modular**, **efisiensi eksekusi**, dan **fleksibilitas antarmuka** (console maupun GUI).
@@ -16,7 +16,7 @@ Awalnya dikembangkan sebagai permainan _tic-tac-toe_, proyek ini dirancang agar 
 
 ---
 
-## ✨ Fitur Utama
+## Fitur Utama
 
 - 🎮 **Game Tic-Tac-Toe**
   - Mode console (terminal)
@@ -33,23 +33,6 @@ Awalnya dikembangkan sebagai permainan _tic-tac-toe_, proyek ini dirancang agar 
 - 🛠️ **Tooling-friendly**
   - Mudah di-build dengan compiler standar C
   - Cocok untuk eksplorasi tooling (clang, LSP, formatter, dsb.)
-
----
-
-## 📂 Struktur Proyek
-
-ubiquitos/
-├── src/
-│ ├── init.c # Inisialisasi board
-│ ├── logic.c # Core game logic
-│ ├── input.c # Implementasi input
-│ ├── declare.c # Deklarasi buffer & interface logic
-│ └── main.c # Entry point (console)
-├── .gitignore
-├── README.md
-└── CMakeLists.txt / build config
-
-> Struktur bisa berkembang seiring penambahan GUI atau executable terpisah.
 
 ---
 
@@ -76,6 +59,8 @@ Contoh pendekatan AI memakai randomness:
 
 - Ambil daftar posisi kosong
 - Pilih satu secara acak dengan satu pemanggilan random.
+
+lihat [AI di sini](https://github.com/xennava/ubiquitos/blob/main/src/AI.c)
 
 ## Tujuan Proyek
 
