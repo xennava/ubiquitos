@@ -10,7 +10,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_UNITY_BUILD ON)
 set(CMAKE_UNITY_BUILD_BATCH_SIZE 0)
 
-file(GLOB SRCS src/*.c src/*.h)
+file(GLOB_RECURSE SRCS src/*.c src/*.h)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
   include(CheckIPOSupported)
@@ -20,11 +20,20 @@ if(CMAKE_BUILD_TYPE STREQUAL "Release")
     set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON)
   endif()
 
-  add_compile_options(-O3 -march=native -flto)
+  add_compile_options(-O3 -march=native -flto -Wl,--fatal-warnings)
+  add_link_options(-flto -Wl,--fatal-warnings)
 endif()
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-  add_compile_options(-Wall -Werror -fsanitize=address)
+  add_compile_options(-Wall -Wextra -Wpedantic -Wshadow -Wstrict-prototypes)
+  add_compile_options(-Wtypedef-redefinition -Wmissing-declarations)
+  add_compile_options(-Wredundant-decls -Werror -fsanitize=address)
+
   add_link_options(-fsanitize=address)
 endif()
 
 add_executable(ubiquitos ${SRCS})
+
+target_compile_definitions(ubiquitos PRIVATE
+    $<$<CONFIG:Debug>:UBIQUITOUS_DEBUG>
+)
+

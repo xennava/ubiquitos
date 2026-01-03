@@ -38,13 +38,22 @@ Awalnya dikembangkan sebagai permainan _tic-tac-toe_, proyek ini dirancang agar 
 
 ## Build & Run (Console)
 
-Contoh build sederhana menggunakan `cmake`:
+Untuk pertama kali, pakai:
 
 ```bash
-CC="ccache clang" cmake -S . -B build -G Ninja
-cmake --build build
-./build/ubiquitos
+./build.sh
 ```
+
+Ini akan membuat folder build, mengonfigurasi cmake, dan auto run.
+
+Kalau mau **hapus folder build** cukup tambahkan parameter argumen `c` atau `clean`
+
+Gunakan argumen `r` atau `run` jika sudah ada konfigurasi.
+
+Contoh simpel memakai `./build.sh`.
+`./build.sh` untuk awal-awal atau belum konfigurasi.
+`./build.sh c` untuk hapus folder build.
+`./build.sh r` run program tanpa konfigurasi awal lagi.
 
 ---
 

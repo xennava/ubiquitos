@@ -1,13 +1,13 @@
-#include "tictactoe.h"
-#include "trit.h"
+#include "game.h"
+#include "utils/trit.h"
 #include <time.h>
 
 void XO(U8 *buffer) {
 
   if (buffer == NULL || getPInternalSt() == NULL)
     return;
-  static const uint8_t xy[9][2] = {{0, 0}, {1, 0}, {2, 0}, {0, 1}, {1, 1},
-                                   {2, 1}, {0, 2}, {1, 2}, {2, 2}};
+  static const U8 xy[9][2] = {{0, 0}, {1, 0}, {2, 0}, {0, 1}, {1, 1},
+                              {2, 1}, {0, 2}, {1, 2}, {2, 2}};
   for (U8 i = 0; i < 9; i++) {
     const U16 gTrit = getTrit16(i);
     if (gTrit == 0)
@@ -42,7 +42,7 @@ void XORst(U8 *buffer) {
     const U16 gTrit = getTrit16(i);
     if (gTrit == 0)
       continue;
-    uint8_t offset = ((xy[i][0] << 1) + xy[i][1] * width) << 2;
+    U8 offset = ((xy[i][0] << 1) + xy[i][1] * width) << 2;
 
     if (gTrit == 1) {
       buffer[0 + offset] = ' ';

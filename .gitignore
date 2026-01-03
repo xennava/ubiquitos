@@ -1,3 +1,4 @@
 ntUsed/
+.cache/
 build/
 *.pch
