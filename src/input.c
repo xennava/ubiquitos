@@ -1,5 +1,5 @@
-#include "game_context.h"
 #include "game.h"
+#include "game_context.h"
 #include "utils/msg.h"
 #include "utils/trit.h"
 #include <stdio.h>
@@ -9,15 +9,15 @@ void updateInput(GameContext *ctx) {
   // Reset input
   if (ctx->last_input_char == 'r') {
     // reset buffer and UI.
-    if (getPInternalSt() == NULL || ctx->move_count == 0) {
+    if (getInternalStatePointer() == NULL || ctx->move_count == 0) {
       setMsg("Hey, main dulu!");
       ctx->current_turn = PLAYER_1;
       return;
     }
     XORst(ctx->input_buffer);
-    printf("The void first: %d\n", *((U16 *)voidState));
+    printf("The void first: %d\n", *((U16 *)getInternalStatePointer()));
     rstTrit16;
-    printf("The void latter: %d\n", *((U16 *)voidState));
+    printf("The void latter: %d\n", *((U16 *)getInternalStatePointer()));
     ctx->current_turn = PLAYER_1;
     ctx->move_count = 0;
     setMsg("Emdam");

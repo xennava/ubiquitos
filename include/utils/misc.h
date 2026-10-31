@@ -11,10 +11,10 @@ typedef int8_t Int8;
 typedef int16_t Int16;
 typedef uint_fast16_t UF16;
 
-extern void *voidState;
+extern void *getInternalStatePointer();
+extern void bindInternalState(void *p);
 
-#define bindPState(x) voidState = x;
-#define bindState(state) voidState = &(state)
+#define bindState(state) bindInternalState(&(state))
 
 #define ptrTo(ptr, type) ((type *)ptr)
 #define stCastTo(state, type) *((type *)(uintptr_t)state)
@@ -24,5 +24,4 @@ extern void *voidState;
 #define bitSet8(index, mask, val)                                              \
   *((U8 *)voidState) = (*(U8 *)(voidState) & ~(mask << index)) | (val << index)
 
-extern void *getPInternalSt();
 #endif // !UTILS_H

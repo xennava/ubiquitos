@@ -4,7 +4,7 @@
 
 void XO(U8 *buffer) {
 
-  if (buffer == NULL || getPInternalSt() == NULL)
+  if (buffer == NULL || getInternalStatePointer() == NULL)
     return;
   static const U8 xy[9][2] = {{0, 0}, {1, 0}, {2, 0}, {0, 1}, {1, 1},
                               {2, 1}, {0, 2}, {1, 2}, {2, 2}};
@@ -34,7 +34,7 @@ void XO(U8 *buffer) {
 }
 
 void XORst(U8 *buffer) {
-  if (buffer == NULL || getPInternalSt() == NULL)
+  if (buffer == NULL || getInternalStatePointer() == NULL)
     return;
   static const U8 xy[9][2] = {{0, 0}, {1, 0}, {2, 0}, {0, 1}, {1, 1},
                               {2, 1}, {0, 2}, {1, 2}, {2, 2}};

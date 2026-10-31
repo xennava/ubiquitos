@@ -5,11 +5,13 @@
 typedef U16 State16[];
 typedef U16 *pState16;
 
-#define setTrit2Bit16(index, value) SetTrit2Bit16(voidState, index, value)
-#define getTrit2Bit16(index) pGetTrit2Bit16(voidState, index)
-#define setTrit16(index, value) SetTrit16(voidState, index, value)
-#define getTrit16(index) pGetTrit16(voidState, index)
-#define rstTrit16 *(ptrTo(voidState, U16)) = 0
+#define setTrit2Bit16(index, value)                                            \
+  SetTrit2Bit16(getInternalStatePointer(), index, value)
+#define getTrit2Bit16(index) pGetTrit2Bit16(getInternalStatePointer(), index)
+#define setTrit16(index, value)                                                \
+  SetTrit16(getInternalStatePointer(), index, value)
+#define getTrit16(index) pGetTrit16(getInternalStatePointer(), index)
+#define rstTrit16 *(ptrTo(getInternalStatePointer, U16)) = 0
 
 extern U16 GetTritState(U64 state, U8 index);
 extern void SetTritState(U64 *state, U8 index, Int8 value);

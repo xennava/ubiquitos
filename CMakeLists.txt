@@ -7,10 +7,10 @@ set(CMAKE_C_STANDARD 23)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-set(CMAKE_UNITY_BUILD ON)
-set(CMAKE_UNITY_BUILD_BATCH_SIZE 0)
+# set(CMAKE_UNITY_BUILD ON)
+# set(CMAKE_UNITY_BUILD_BATCH_SIZE 0)
 
-file(GLOB_RECURSE SRCS src/*.c src/*.h)
+file(GLOB_RECURSE SRCS CONFIGURE_DEPENDS src/*.c)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
   include(CheckIPOSupported)
@@ -26,10 +26,13 @@ endif()
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
   add_compile_options(-Wall -Wextra -Wpedantic -Wshadow -Wstrict-prototypes)
   add_compile_options(-Wtypedef-redefinition -Wmissing-declarations)
-  add_compile_options(-Wredundant-decls -Werror -fsanitize=address)
+  add_compile_options(-Wredundant-decls -Werror
+    -fsanitize=address,leak,undefined)
 
-  add_link_options(-fsanitize=address)
+  add_link_options(-fsanitize=address,leak,undefined)
 endif()
+
+add_link_options(-fuse-ld=lld)
 
 add_executable(ubiquitos ${SRCS})
 
@@ -37,3 +40,4 @@ target_compile_definitions(ubiquitos PRIVATE
     $<$<CONFIG:Debug>:UBIQUITOUS_DEBUG>
 )
 
+target_include_directories(ubiquitos PRIVATE include)

@@ -8,7 +8,7 @@
 #define invalidMove ctx->move_count > 8 || ctx->move_count == 0
 
 void AIturn(GameContext *ctx) {
-  if (!getPInternalSt())
+  if (!getInternalStatePointer())
     return;
   if (invalidMove)
     return;

@@ -7,7 +7,7 @@
 static void winning(GameContext *ctx) {
   const U8 winT = ctx->winner_player;
   if (winT != 0 && ctx->current_turn != 0) {
-    snprintf(what, 31, "Ada yang menang nih! %d", winT);
+    snprintf(getWhat(), 31, "Ada yang menang nih! %d", winT);
     if (winT == 2) {
       ctx->higher_score++;
     } else if (winT == 1) {
@@ -18,6 +18,16 @@ static void winning(GameContext *ctx) {
   }
 }
 
+void adjCheck(GameContext *ctx, U16 now, U16 n1, U16 n2) {
+#define getTrit16LocalHelper(index) pGetTrit16(getInternalStatePointer(), index)
+  now = getTrit16LocalHelper(now);
+  if (((now != 0) && (now == getTrit16LocalHelper(n1)) &&
+       (now == getTrit16LocalHelper(n2)))) {
+    ctx->winner_player = now;
+    winning(ctx);
+    return;
+  }
+}
 void win(GameContext *ctx) {
   // 1. Dicek dulu ctx->winner_player-nya siapa, karena awalnya pasti 0,
   // 2. simpan nilai sekali akses ctx->winner_player di variabel winT,
@@ -30,64 +40,17 @@ void win(GameContext *ctx) {
   //    c. nol-kan state agar Player tidak bisa memilih dan nol-kan
   //    ctx->winner_player agar menyesuaikan logika permainan.
 
-  //
-  //
-  if (((pGetTrit16(voidState, 0) != 0) &&
-       (pGetTrit16(voidState, 0) == pGetTrit16(voidState, 1)) &&
-       (pGetTrit16(voidState, 0) == pGetTrit16(voidState, 2)))) {
-    ctx->winner_player = pGetTrit16(voidState, 0);
-    winning(ctx);
-    return;
-  }
-  if (((pGetTrit16(voidState, 3) != 0) &&
-       (pGetTrit16(voidState, 3) == pGetTrit16(voidState, 4)) &&
-       (pGetTrit16(voidState, 3) == pGetTrit16(voidState, 5)))) {
-    ctx->winner_player = pGetTrit16(voidState, 3);
-    winning(ctx);
-    return;
-  }
-  if (((pGetTrit16(voidState, 6) != 0) &&
-       (pGetTrit16(voidState, 6) == pGetTrit16(voidState, 7)) &&
-       (pGetTrit16(voidState, 6) == pGetTrit16(voidState, 8)))) {
-    ctx->winner_player = pGetTrit16(voidState, 6);
-    winning(ctx);
-    return;
-  }
-  if (((pGetTrit16(voidState, 0) != 0) &&
-       (pGetTrit16(voidState, 0) == pGetTrit16(voidState, 3)) &&
-       (pGetTrit16(voidState, 0) == pGetTrit16(voidState, 6)))) {
-    ctx->winner_player = pGetTrit16(voidState, 0);
-    winning(ctx);
-    return;
-  }
-  if (((pGetTrit16(voidState, 1) != 0) &&
-       (pGetTrit16(voidState, 1) == pGetTrit16(voidState, 4)) &&
-       (pGetTrit16(voidState, 1) == pGetTrit16(voidState, 7)))) {
-    ctx->winner_player = pGetTrit16(voidState, 1);
-    winning(ctx);
-    return;
-  }
-  if (((pGetTrit16(voidState, 2) != 0) &&
-       (pGetTrit16(voidState, 2) == pGetTrit16(voidState, 5)) &&
-       (pGetTrit16(voidState, 2) == pGetTrit16(voidState, 8)))) {
-    ctx->winner_player = pGetTrit16(voidState, 2);
-    winning(ctx);
-    return;
-  }
-  if (((pGetTrit16(voidState, 0) != 0) &&
-       (pGetTrit16(voidState, 0) == pGetTrit16(voidState, 4)) &&
-       (pGetTrit16(voidState, 0) == pGetTrit16(voidState, 8)))) {
-    ctx->winner_player = pGetTrit16(voidState, 0);
-    winning(ctx);
-    return;
-  }
-  if (((pGetTrit16(voidState, 2) != 0) &&
-       (pGetTrit16(voidState, 2) == pGetTrit16(voidState, 4)) &&
-       (pGetTrit16(voidState, 2) == pGetTrit16(voidState, 6)))) {
-    ctx->winner_player = pGetTrit16(voidState, 2);
-    winning(ctx);
-    return;
-  };
-  if (0)
-    rstTrit16;
+  adjCheck(ctx, 0, 1, 2);
+  adjCheck(ctx, 3, 4, 5);
+  adjCheck(ctx, 6, 7, 8);
+
+  adjCheck(ctx, 0, 3, 6);
+  adjCheck(ctx, 1, 4, 7);
+  adjCheck(ctx, 2, 5, 8);
+
+  adjCheck(ctx, 0, 4, 8);
+  adjCheck(ctx, 2, 4, 6);
+
+  // if (0)
+  //   rstTrit16;
 }

@@ -1,6 +1,6 @@
+#include "utils/trit.h"
+#include "utils/misc.h"
 
-#include "trit.h"
-#include "misc.h"
 static const U64 POW3[40] = {1,
                              3,
                              9,
