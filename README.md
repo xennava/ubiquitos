@@ -1,94 +1,63 @@
 # Ubiquitos
 
-<!--toc:start-->
+Ubiquitos adalah proyek permainan Tic-Tac-Toe berbasis bahasa C yang dikembangkan sebagai sarana pembelajaran dan eksperimen pemrograman. Proyek ini menyediakan permainan melalui antarmuka terminal dengan logika permainan dan pemilihan langkah komputer yang diimplementasikan secara terpisah.
 
-- [Ubiquitos](#ubiquitos)
-  - [Fitur Utama](#fitur-utama)
-  - [Build & Run (Console)](#build-run-console)
-  - [Tentang AI & Randomness](#tentang-ai-randomness)
-  - [Tujuan Proyek](#tujuan-proyek)
-  - [Status](#status)
-  <!--toc:end-->
+## Fitur
 
-**Ubiquitos** adalah proyek pembelajaran dan eksperimen pemrograman berbasis C yang berfokus pada **desain modular**, **efisiensi eksekusi**, dan **fleksibilitas antarmuka** (console maupun GUI).
+- **Tic-Tac-Toe:** Permainan papan 3×3 melalui terminal.
+- **Computer Opponent:** Pemilihan langkah komputer berdasarkan posisi yang masih tersedia.
+- **Random Move Selection:** Komputer memilih salah satu posisi kosong secara acak.
+- **Pemisahan Komponen:** Logika permainan, pemilihan langkah, dan interaksi terminal ditempatkan pada bagian kode yang berbeda.
 
-Awalnya dikembangkan sebagai permainan _tic-tac-toe_, proyek ini dirancang agar logika inti tetap independen dari tampilan, sehingga mudah diperluas, diuji, dan dikembangkan ke arah yang lebih kompleks di masa depan.
+## Build & Run
 
----
+Pastikan compiler C dan CMake telah tersedia di sistem.
 
-## Fitur Utama
-
-- 🎮 **Game Tic-Tac-Toe**
-  - Mode console (terminal)
-  - Struktur siap dikembangkan ke GUI
-- 🧠 **AI sederhana**
-  - Pemilihan langkah berdasarkan _available moves_
-  - Mengutamakan eksekusi cepat (single-random call)
-- 🧩 **Desain modular**
-  - Pemisahan logic, input, dan inisialisasi
-  - Mudah diganti frontend (console / GUI)
-- ⚡ **Efisiensi**
-  - Minim loop yang tidak perlu
-  - Eksperimen optimisasi random & operasi bit
-- 🛠️ **Tooling-friendly**
-  - Mudah di-build dengan compiler standar C
-  - Cocok untuk eksplorasi tooling (clang, LSP, formatter, dsb.)
-
----
-
-## Build & Run (Console)
-
-Untuk pertama kali, pakai:
+Jalankan skrip build dari direktori utama proyek:
 
 ```bash
 ./build.sh
 ```
 
-Ini akan membuat folder build, mengonfigurasi cmake, dan auto run.
+Skrip tersebut mengonfigurasi proyek menggunakan CMake, melakukan proses build, dan menjalankan program.
 
-Kalau mau **hapus folder build** cukup tambahkan parameter argumen `c` atau `clean`
+### Argumen Skrip
 
-Gunakan argumen `r` atau `run` jika sudah ada konfigurasi.
+| Perintah | Fungsi |
+|---|---|
+| `./build.sh` | Mengonfigurasi, membangun, dan menjalankan program |
+| `./build.sh r` | Menjalankan program menggunakan hasil build yang tersedia |
+| `./build.sh run` | Alternatif untuk perintah `r` |
+| `./build.sh c` | Menghapus direktori build |
+| `./build.sh clean` | Alternatif untuk perintah `c` |
 
-Contoh simpel memakai `./build.sh`.
-`./build.sh` untuk awal-awal atau belum konfigurasi.
-`./build.sh c` untuk hapus folder build.
-`./build.sh r` run program tanpa konfigurasi awal lagi.
+## Computer Opponent
 
----
+Pemilihan langkah komputer menggunakan pendekatan berbasis random selection. Program terlebih dahulu mengidentifikasi posisi papan yang masih kosong, kemudian memilih salah satunya secara acak.
 
-## Tentang AI & Randomness
+Pendekatan ini digunakan untuk menghasilkan lawan komputer sederhana tanpa algoritma pencarian langkah atau evaluasi strategi permainan.
 
-AI pada proyek ini belum sempurna, tapi:
+Implementasinya dapat dilihat pada [`src/AI.c`](https://github.com/xennava/ubiquitos/blob/main/src/AI.c).
 
-- Gampang dipahami dan diimplementasi
-- Cepat dieksekusi
+## Struktur dan Pengembangan
 
-Contoh pendekatan AI memakai randomness:
+Kode program dibagi berdasarkan tanggung jawab masing-masing komponen, sehingga logika permainan tidak sepenuhnya bergantung pada interaksi terminal.
 
-- Ambil daftar posisi kosong
-- Pilih satu secara acak dengan satu pemanggilan random.
+Pemisahan ini menjadi dasar untuk eksperimen lebih lanjut, seperti pengembangan antarmuka grafis atau penambahan pendekatan pemilihan langkah yang berbeda.
 
-lihat [AI di sini](https://github.com/xennava/ubiquitos/blob/main/src/AI.c)
+## Tujuan
 
-## Tujuan Proyek
+Proyek ini dikembangkan untuk mempraktikkan:
 
-- Media belajar pemrograman C tingkat menengah.
+- Pemrograman C dan pengorganisasian kode.
+- Pemisahan logika program dari interaksi pengguna.
+- Pengelolaan kondisi dan status permainan.
+- Penggunaan fungsi dan struktur program dalam implementasi permainan sederhana.
 
-- Melatih:
-  - modularitas
-  - pemisahan concern
-  - pemikiran efisiensi (cycle & resource)
+## Status Pengembangan
 
-- Fondasi untuk:
-  - GUI
-  - AI yang lebih kompleks
-  - atau game lainnya
-
-## Status
-
-- 🟢 Core logic stabil
-- 🟢 Mode console
-- ⚪ Mode GUI (planned)
-- ⚪ Multiple executable (console / GUI)
-- ⚪ Dokumentasi internal lebih detail
+- [x] Logika dasar permainan Tic-Tac-Toe
+- [x] Antarmuka terminal
+- [x] Pemilihan langkah komputer secara acak
+- [ ] Antarmuka grafis (GUI)
+- [ ] Pengembangan strategi komputer yang lebih baik
