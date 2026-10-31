@@ -13,8 +13,8 @@ void inputHandler() {
   memset(keys, 0, 255);
 
   _char = getchar();
+  keys[(int)_char] = true;
   while (isspace(_char)) {
     _char = getchar();
-    keys[(int)_char] = true;
   }
 }

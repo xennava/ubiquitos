@@ -23,9 +23,6 @@ typedef struct {
   /* Is the game currently running? */
   bool game_running;
 
-  /* Last input character from user */
-  char last_input_char;
-
   /* Input buffer for all processed characters */
   U8 input_buffer[242];
 
