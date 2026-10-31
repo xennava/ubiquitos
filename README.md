@@ -16,7 +16,7 @@ Pastikan compiler C dan CMake telah tersedia di sistem.
 Jalankan skrip build dari direktori utama proyek:
 
 ```bash
-./build.sh
+./buildnrun.sh
 ```
 
 Skrip tersebut mengonfigurasi proyek menggunakan CMake, melakukan proses build, dan menjalankan program.
@@ -25,11 +25,11 @@ Skrip tersebut mengonfigurasi proyek menggunakan CMake, melakukan proses build, 
 
 | Perintah | Fungsi |
 |---|---|
-| `./build.sh` | Mengonfigurasi, membangun, dan menjalankan program |
-| `./build.sh r` | Menjalankan program menggunakan hasil build yang tersedia |
-| `./build.sh run` | Alternatif untuk perintah `r` |
-| `./build.sh c` | Menghapus direktori build |
-| `./build.sh clean` | Alternatif untuk perintah `c` |
+| `./buildnrun.sh` | Mengonfigurasi, membangun, dan menjalankan program |
+| `./buildnrun.sh r` | Menjalankan program menggunakan hasil build yang tersedia |
+| `./buildnrun.sh run` | Alternatif untuk perintah `r` |
+| `./buildnrun.sh c` | Menghapus direktori build |
+| `./buildnrun.sh clean` | Alternatif untuk perintah `c` |
 
 ## Computer Opponent
 
