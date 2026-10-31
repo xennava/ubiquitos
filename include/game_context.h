@@ -4,6 +4,9 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#define width 22
+#define height 11
+
 /* ---- Type aliases for clarity ---- */
 typedef uint8_t U8;
 typedef uint16_t U16;
