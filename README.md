@@ -37,7 +37,7 @@ Pemilihan langkah komputer menggunakan pendekatan berbasis random selection. Pro
 
 Pendekatan ini digunakan untuk menghasilkan lawan komputer sederhana tanpa algoritma pencarian langkah atau evaluasi strategi permainan.
 
-Implementasinya dapat dilihat pada [`src/AI.c`](https://github.com/xennava/ubiquitos/blob/main/src/AI.c).
+Implementasinya dapat dilihat pada [`src/ai.c`](https://github.com/xennava/ubiquitos/blob/main/src/ai.c).
 
 ## Struktur dan Pengembangan
 
