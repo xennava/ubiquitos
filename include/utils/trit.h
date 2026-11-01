@@ -22,6 +22,5 @@ extern void SetTrit2Bit(U64 *state, U8 index, Int8 value);
 extern U16 pGetTrit2Bit16(U16 *state, U8 index);
 extern U16 GetTrit2Bit16(U16 state, U8 index);
 extern void SetTrit2Bit16(U16 *state, U8 index, U8 value);
-extern void SetsTrit2Bit16(State16 arr, int n);
 extern void SetsTrit16(State16 arr);
 #endif // !TRIT_H

@@ -2,7 +2,6 @@
 #include "game_context.h"
 #include "utils/misc.h"
 #include "utils/msg.h"
-#include "utils/trit.h"
 #include <core/input.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -21,12 +20,11 @@ void gameInit(GameContext *ctx) {
     memcpy(ctx->input_buffer + i, "------|-------|------",
            (sizeof(U8) << 4) + 5);
 
-  bindState(ctx->board_bitmask);
   srand(time(NULL));
 }
 
 void draw(GameContext *ctx) {
-  XO(ctx->input_buffer);
+  XO(ctx);
   fwrite(ctx->input_buffer, sizeof(typeof(*ctx->input_buffer)), luas, stdout);
 
 #ifndef NDEBUG
@@ -34,52 +32,91 @@ void draw(GameContext *ctx) {
          "%d\n-- P1: "
          "%d -- P2: %d\n",
          getWhat(), getChar(),
-         (ctx->current_turn == PLAYER_1
+         (ctx->currentPlayerId == 0
               ? "HUMAN"
-              : (ctx->current_turn == PLAYER_2 ? "AI" : "NONE")),
-         getChar() - '0', ctx->move_count, ctx->lower_score, ctx->higher_score);
+              : (ctx->currentPlayerId == 1 ? "AI" : "NONE")),
+         getChar() - '0', ctx->move_count, ctx->players[0].score,
+         ctx->players[1].score);
 #endif
 }
 
-void gameInput(GameContext *ctx) {
+void resetPlayGameHandler(GameContext *ctx) {
+  if (ctx->resetPlayGame == false)
+    return;
+  XORst(ctx);
+  firstPlayer(ctx);
+  memset(ctx->board_bitmask, 0, sizeof(int) * ctx->boardSize);
+  ctx->move_count = 0;
+  ctx->resetPlayGame = false;
+}
+
+bool playerChoosed = false;
+void playerInput(GameContext *ctx) {
   // Quit handler
-  if (getKeys()['q']) {
+  if (getChar() == 'q') {
     printf("Quitted.\n");
     ctx->game_running = false;
     return;
   }
   // Reset input
-  if (getKeys()['r']) {
+  if (getChar() == 'r') {
     // reset buffer and UI.
-    if (getInternalStatePointer() == NULL || ctx->move_count == 0) {
+    if (ctx->move_count == 0) {
       setMsg("Main dulu..");
-      ctx->current_turn = PLAYER_1;
+      firstPlayer(ctx);
       return;
     }
-    XORst(ctx->input_buffer);
-    printf("The void first: %d\n", *((U16 *)getInternalStatePointer()));
-    rstTrit16;
-    printf("The void latter: %d\n", *((U16 *)getInternalStatePointer()));
-    ctx->current_turn = PLAYER_1;
-    ctx->move_count = 0;
-    setMsg("Emdam");
+    ctx->resetPlayGame = true;
   }
   // User input
-  if (ctx->current_turn == PLAYER_1 && getChar() >= '0' && getChar() <= '9') {
-    if (getTrit16(getChar() - '1') == 0) {
-      setTrit16(getChar() - '1', ctx->current_turn);
-      ctx->current_turn = PLAYER_2;
-      ctx->move_count++;
+  U8 n = getChar() - '1';
+  int *board = ctx->board_bitmask;
+  if (board)
+    if (n >= 0 && n <= 9) {
+      if (board[n] == 0) {
+        board[n] = ctx->players[ctx->currentPlayerId].shape;
+        ctx->move_count++;
+
+        stepPlayer(ctx);
+        playerChoosed = true;
+      }
     }
-  }
-  // AI input/output handler
-  if (ctx->current_turn == PLAYER_2)
-    AIturn(ctx);
 }
 
 void gameLoop(GameContext *ctx) {
-  gameInput(ctx);
-  win(ctx);
+
+  playerInput(ctx);
+
+  if (ctx->players && playerChoosed)
+    AITurn(ctx);
+
+  if (playerChoosed)
+    playerChoosed = false;
+
+  matchHandler(ctx);
+
+  resetPlayGameHandler(ctx);
 
   draw(ctx);
+}
+
+void endGame(GameContext *ctx) {
+  free(ctx->players);
+  ctx->players = NULL;
+  free(ctx->board_bitmask);
+  ctx->players = NULL;
+}
+
+void firstPlayer(GameContext *ctx) {
+  if (ctx == NULL) {
+    return;
+  }
+  ctx->currentPlayerId = 0;
+}
+void stepPlayer(GameContext *ctx) {
+  if (ctx == NULL)
+    return;
+  ctx->currentPlayerId++;
+  if (ctx->currentPlayerId >= ctx->playerCount)
+    ctx->currentPlayerId = 0;
 }

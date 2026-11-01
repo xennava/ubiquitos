@@ -1,50 +1,45 @@
 #ifndef GAME_CONTEXT_H
 #define GAME_CONTEXT_H
 
+#include "utils/misc.h"
 #include <stdbool.h>
 #include <stdint.h>
 
 #define width 22
 #define height 11
 
-/* ---- Type aliases for clarity ---- */
-typedef uint8_t U8;
-typedef uint16_t U16;
-
-/* ---- Player / Turn enum ---- */
-typedef enum {
-  PLAYER_NONE = 0, /* no player / empty state */
-  PLAYER_1 = 1,    /* human player */
-  PLAYER_2 = 2     /* AI player */
+typedef struct {
+  U8 id;
+  U8 score;
+  U8 shape;
+  bool isAi;
 } Player;
 
 /* ---- Main Game Context ---- */
 typedef struct {
-  /* Is the game currently running? */
-  bool game_running;
-
   /* Input buffer for all processed characters */
   U8 input_buffer[242];
+  Player *players;
+  /* Bitboard representing X/O positions on the board */
+  int *board_bitmask;
+  U8 boardSize;
 
+  U8 playerCount;
   /* Whose turn is it? (Player enum) */
-  Player current_turn;
+  U8 currentPlayerId;
 
   /* Winner latch to avoid race condition */
-  Player winner_player;
+  U8 winnerId;
+  bool isDraw;
+
+  /* Is the game currently running? */
+  bool game_running;
+  bool resetPlayGame;
 
   /* Number of valid moves already processed */
   U8 move_count;
-
-  /* Player scores (bit-packed if needed):
-   * Lower 8 bits  -> player 1  (human)
-   * Higher 8 bits -> player 2  (AI)
-   */
-  U8 lower_score;
-  U8 higher_score;
-
-  /* Bitboard representing X/O positions on the board */
-  U16 board_bitmask;
-
 } GameContext;
 
+extern void firstPlayer(GameContext *ctx);
+extern void stepPlayer(GameContext *ctx);
 #endif /* GAME_CONTEXT_H */

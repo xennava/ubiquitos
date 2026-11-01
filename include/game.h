@@ -8,14 +8,13 @@
 
 extern const UF16 luas;
 
-extern void XO(U8 *buffer);
-extern void XORst(U8 *buffer);
-extern void win(GameContext *ctx);
-extern void AIturn(GameContext *ctx);
+extern void XO(GameContext *ctx);
+extern void XORst(GameContext *ctx);
+extern void AITurn(GameContext *ctx);
+extern void matchHandler(GameContext *ctx);
+
 extern void gameInit(GameContext *ctx);
 extern void gameLoop(GameContext *ctx);
-// extern void draw(GameContext *ctx);
-// extern void gameInput(GameContext *ctx);
-// extern void win(GameContext *ctx);
+extern void endGame(GameContext *ctx);
 
 #endif

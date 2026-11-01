@@ -79,12 +79,4 @@ void SetTrit2Bit16(U16 *state, U8 index, U8 value) {
   *state = (*state & ~(0x3ULL << shift)) | ((U16)value << shift);
 }
 
-void SetsTrit2Bit16(State16 arr, int n) {
-  int i = 0;
-  while (i != n) {
-    setTrit2Bit16(i, arr[i]);
-    i++;
-  }
-}
-
 // void SetsTrit16(State16 arr) { printf("size: %lu", sizeof(typeof(arr))); }
